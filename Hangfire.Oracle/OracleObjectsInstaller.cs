@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 using Dapper;
@@ -26,8 +27,8 @@ namespace Hangfire.Oracle.Core
 
             var script = GetStringResource("Hangfire.Oracle.Core.Install.sql");
 
-            var sqlCommands = sql.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-            sqlCommands.ToList().ForEach(s => _oracleConnection.Execute(s));
+            var sqlCommands = script.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            sqlCommands.ToList().ForEach(s => connection.Execute(s));
 
     Log.Info("Hangfire SQL objects installed.");
         }
